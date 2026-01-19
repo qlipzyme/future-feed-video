@@ -22,14 +22,15 @@ jobs:
           sudo apt-get install -y imagemagick
           sudo sed -i 's/<policy domain="path" rights="none" pattern="@\*"/<policy domain="path" rights="read|write" pattern="@\*"/' /etc/ImageMagick-6/policy.xml
 
-      - name: Install and Run Script
+      - name: Install Libraries and Run Script
         run: |
           python -m pip install --upgrade pip
-          python -m pip install moviepy==1.0.3 Pillow numpy
+          # We force Pillow to 9.5.0 to fix the 'ANTIALIAS' error
+          python -m pip install moviepy==1.0.3 Pillow==9.5.0 numpy==1.24.3
           python main.py
 
       - name: Upload Finished Video
-        if: always() # This runs even if the script fails so you can see logs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: edited-video
