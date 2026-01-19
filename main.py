@@ -3,7 +3,7 @@
 # ==========================================
 import os
 
-# Define paths relative to the GitHub repository root
+# Files must be in your GitHub repository or Assets folder
 MAIN_VIDEO_PATH = "sample.mp4"
 BG_VIDEO_PATH   = "Assets/ff-background-video.mp4"
 LOGO_PATH       = "Assets/ff-logo.png"
@@ -29,14 +29,14 @@ FONT_COLOR = "white"
 CANVAS_SIZE = (1080, 1350)
 
 # ==========================================
-# LIBRARIES
+# LIBRARIES & INITIALIZATION
 # ==========================================
 import moviepy.editor as mp
 from moviepy.config import change_settings
 from PIL import Image, ImageDraw
 import numpy as np
 
-# Force MoviePy to find ImageMagick on Linux
+# Tell MoviePy where ImageMagick is located on the GitHub Linux runner
 change_settings({"IMAGEMAGICK_BINARY": r"/usr/bin/convert"})
 
 if not os.path.exists(OUTPUT_FOLDER):
