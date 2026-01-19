@@ -15,22 +15,22 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+          cache: 'pip' # This helps speed up future runs
 
       - name: Install System Dependencies
-        # This installs ImageMagick and fixes the security policy
         run: |
           sudo apt-get update
           sudo apt-get install -y imagemagick
           sudo sed -i 's/<policy domain="path" rights="none" pattern="@\*"/<policy domain="path" rights="read|write" pattern="@\*"/' /etc/ImageMagick-6/policy.xml
 
       - name: Install Python Libraries
-        # We install version 1.0.3 specifically to match the 'moviepy.editor' syntax
         run: |
           python -m pip install --upgrade pip
           pip install moviepy==1.0.3 Pillow numpy
 
       - name: Run Video Script
-        run: python main.py
+        # We use 'python3' to be safe on Linux
+        run: python3 main.py
 
       - name: Upload Finished Video
         uses: actions/upload-artifact@v4
