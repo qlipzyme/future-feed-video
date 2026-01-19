@@ -1,0 +1,37 @@
+name: Video Processor
+
+on:
+  workflow_dispatch: # Allows you to click "Run" manually
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          # Fix ImageMagick security policy just like in Colab
+          sudo sed -i 's/<policy domain="path" rights="none" pattern="@\*"/<policy domain="path" rights="read|write" pattern="@\*"/' /etc/ImageMagick-6/policy.xml
+
+      - name: Install Python Libraries
+        run: |
+          pip install moviepy Pillow numpy
+
+      - name: Run Video Script
+        run: python main.py
+
+      - name: Upload Finished Video
+        uses: actions/upload-artifact@v4
+        with:
+          name: edited-video
+          path: output/final_facebook_video.mp4
