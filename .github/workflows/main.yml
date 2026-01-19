@@ -1,7 +1,7 @@
 name: Video Processor
 
 on:
-  workflow_dispatch: # Allows you to click "Run" manually
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,15 +17,17 @@ jobs:
           python-version: '3.10'
 
       - name: Install System Dependencies
+        # This installs ImageMagick and fixes the security policy
         run: |
           sudo apt-get update
           sudo apt-get install -y imagemagick
-          # Fix ImageMagick security policy just like in Colab
           sudo sed -i 's/<policy domain="path" rights="none" pattern="@\*"/<policy domain="path" rights="read|write" pattern="@\*"/' /etc/ImageMagick-6/policy.xml
 
       - name: Install Python Libraries
+        # We install version 1.0.3 specifically to match the 'moviepy.editor' syntax
         run: |
-          pip install moviepy Pillow numpy
+          python -m pip install --upgrade pip
+          pip install moviepy==1.0.3 Pillow numpy
 
       - name: Run Video Script
         run: python main.py
