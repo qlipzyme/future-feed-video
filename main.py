@@ -3,7 +3,7 @@
 # ==========================================
 import os
 
-# Files must be in your GitHub repository or Assets folder
+# Paths for GitHub environment
 MAIN_VIDEO_PATH = "sample.mp4"
 BG_VIDEO_PATH   = "Assets/ff-background-video.mp4"
 LOGO_PATH       = "Assets/ff-logo.png"
@@ -11,7 +11,7 @@ FONT_PATH       = "Assets/Fredoka-Bold.ttf"
 OUTPUT_FOLDER   = "output"
 OUTPUT_NAME     = "final_facebook_video.mp4"
 
-# Layout and Content Settings
+# Layout Settings
 CAPTION_TEXT = "A morning raid turned into a fatal tragedy. Three shots were fired, and a life was lost in the blink of an eye. Minneapolis is demanding the truth about what happened today."
 MAIN_X, MAIN_Y = 254.7, 116
 MAIN_W, MAIN_H = 570.7, 1016
@@ -29,14 +29,14 @@ FONT_COLOR = "white"
 CANVAS_SIZE = (1080, 1350)
 
 # ==========================================
-# LIBRARIES & INITIALIZATION
+# LIBRARIES
 # ==========================================
 import moviepy.editor as mp
 from moviepy.config import change_settings
 from PIL import Image, ImageDraw
 import numpy as np
 
-# Tell MoviePy where ImageMagick is located on the GitHub Linux runner
+# Fix ImageMagick path for Linux
 change_settings({"IMAGEMAGICK_BINARY": r"/usr/bin/convert"})
 
 if not os.path.exists(OUTPUT_FOLDER):
